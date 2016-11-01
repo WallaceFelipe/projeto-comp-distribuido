@@ -3,6 +3,7 @@
 # após esse agrupamento ele irá **reduzir** esse conjunto de de dados, mostrando apenas os que são diferentes
 
 import  sys
+import timeit
 
 def mapping(filename):
     file = open(filename, "r")
@@ -31,13 +32,33 @@ def mapping(filename):
                     if not x in primos:
                         primos.append(x)
     
+    file.close()
     return primos
 
 
-def main():
-    lista = mapping("arquivo3.txt")
-    print(lista)
+def somalista(lista):
+    return sum(lista)
 
-if __name__ == '__main__':
-    sys.exit(int(main() or 0))
+def escreveLista(lista):
+    file = open("resultado.txt","w")
+    for i, num in enumerate(lista):
+        file.write("{}".format(num))
+        
+        if i % 100 == 0 and i != 0:
+            file.write("\n")
+        elif i != len(lista)-1:
+            file.write(" ")
+
+    file.close()
+
+def main():
+    lista = mapping("arquivo2.txt")
+    lista.sort()
+    escreveLista(lista)
+    print(somalista(lista))
+
+print(timeit.timeit("main()", "from __main__ import main", number = 3))
+
+#if __name__ == '__main__':
+ #   sys.exit(int(main() or 0))
         
